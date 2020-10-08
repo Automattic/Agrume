@@ -376,6 +376,10 @@ public final class Agrume: UIViewController {
     return collectionView.indexPathForItem(at: visiblePoint)?.item ?? startIndex
   }
   
+  public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+      return .portrait
+  }
+  
   override public func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
     let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
