@@ -37,9 +37,6 @@ public final class Agrume: UIViewController {
   public var didDismiss: (() -> Void)?
   /// Optional closure to call whenever Agrume scrolls to the next image in a collection. Passes the "page" index
   public var didScroll: ((_ index: Int) -> Void)?
-  /// An optional download handler. Passed the URL that is supposed to be loaded. Call the completion with the image
-  /// when the download is done.
-  public var download: ((_ url: URL, _ completion: @escaping DownloadCompletion) -> Void)?
   /// Status bar style when presenting
   public var statusBarStyle: UIStatusBarStyle? {
     didSet {
@@ -413,14 +410,7 @@ extension Agrume: AgrumeDataSource {
   }
   
   public func image(forIndex index: Int, completion: @escaping (UIImage?) -> Void) {
-    let downloadHandler = download ?? AgrumeServiceLocator.shared.downloadHandler
-    if let handler = downloadHandler, let url = images[index].url {
-      handler(url, completion)
-    } else if let url = images[index].url {
-      downloadTask = ImageDownloader.downloadImage(url, completion: completion)
-    } else {
-      completion(images[index].image)
-    }
+    completion(images[index].image)
   }
   
 }
